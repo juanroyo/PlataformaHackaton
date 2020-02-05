@@ -1,24 +1,20 @@
-import React from 'react';
-import Carousel, { Modal, ModalGateway } from 'react-images';
+import React, { Component } from 'react';
+import { Card, Button } from 'react-bootstrap';
 
-const images = [{ src: 'path/to/image-1.jpg' }, { src: 'path/to/image-2.jpg' }];
-
-class Component extends React.Component {
-  state = { modalIsOpen: false };
-  toggleModal = () => {
-    this.setState(state => ({ modalIsOpen: !state.modalIsOpen }));
-  };
-  render() {
-    const { modalIsOpen } = this.state;
-
-    return (
-      <ModalGateway>
-        {modalIsOpen ? (
-          <Modal onClose={this.toggleModal}>
-            <Carousel views={images} />
-          </Modal>
-        ) : null}
-      </ModalGateway>
-    );
-  }
+class Footer extends Component {
+    render() {
+      return(
+        <Card>
+          <Card.Header>Featured</Card.Header>
+          <Card.Body>
+            <Card.Title>Special title treatment</Card.Title>
+            <Card.Text>
+              With supporting text below as a natural lead-in to additional content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+      );
+    }
 }
+export default Footer
