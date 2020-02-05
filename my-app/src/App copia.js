@@ -17,17 +17,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class App extends Component {
   render() {
   return (
-    <Router>
     <div>
       <Header />
-      <Switch>
-        <Route path="/listado" component={Listado} />
-        <Route path="/body" component={Body} />
-      </Switch>
-
+      <Body />
       <Footer />
     </div>
-    </Router>
   );
 }
 }

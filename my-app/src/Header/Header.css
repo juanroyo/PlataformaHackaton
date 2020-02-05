@@ -1,0 +1,29 @@
+a {
+  height: 30px;
+}
+li {
+  display: inline;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 0px;
+}
+li:first-of-type {
+  margin-right: 90px;
+  font-weight: bold;
+  font-size: 24px;
+}
+ul {
+  height: 50px;
+  margin-bottom: 0px;
+
+}
+.menu {
+  width: 100%;
+  background-color: gray;
+  display: flex;
+  justify-content: flex-start;
+}
+.palcentro {
+  display: flex;
+  align-items: center;
+}
