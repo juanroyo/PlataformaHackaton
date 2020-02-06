@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import "./basic.css"
+import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 //import MyProvider from "/Users/juanroyo/Documents/projects/PlataformaHackaton/my-app/src/provider.js"
 
 export default class Basic extends Component {
-  constructor(props) {
-      super(props);
+  constructor() {
+      super();
       this.state = {
-        titulo: '',
-        gender: '',
-        estilo: '',
+
 
         selected: 'seleccionar',
         display: "none",
@@ -20,11 +19,11 @@ export default class Basic extends Component {
       this.handleAppear = this.handleAppear.bind(this);
     }
 
-    handleChange(e) {
+    handleChange(title, gender, style) {
       let change = {}
-    change[e.target.name] = e.target.value
+    change[title.target.name] = title.target.value
     this.setState(change)
-    console.log(this.state.titulo)
+    console.log(BooksUser.title)
     }
     /*handleChange(event) {
       this.setState({value: event.target.value});
@@ -55,25 +54,20 @@ export default class Basic extends Component {
     }
 
     drawInputs() {
-
-
       // En funcion del selected...
       if(this.state.selected != "seleccionar") {
-
         // Si es comic
         if(this.state.selected == "comic") {
-          var ph = "Estilo";
-          var n = "estilo";
-          var v = this.state.estilo;
+          var ph = "Style";
+          var n = "style";
+          var v = this.state.style;
         } else if (this.state.selected == "novel") {
-          var ph = "Gender";
+          var ph = "gender";
           var n = "gender";
           var v = this.state.gender;
         }
-
         // Si es lo otro
         // ...
-
         return (<input type="text" placeholder={ph} name={n} value={v} onChange={this.handleChange.bind(this)} />);
       }
     }
@@ -81,15 +75,17 @@ export default class Basic extends Component {
     render() {
       return (
         <div>
+        <BooksContext.Consumer>
+          {BooksUser => (
         <form onSubmit={this.handleSubmit}>
           <div className="wrap">
           <label>
             Name:
-            <input type="text" name="titulo" value={this.state.titulo} placeholder="Titulo" onChange={this.handleChange.bind(this)} />
+            <input type="text" name="title" placeholder="Title" onChange={this.handleChange.bind(this)} />
             {this.drawInputs()}
             {/*
-            <input type="text" style={{display: this.state.display}} placeholder="Estilo" name="estilo" value={this.state.gender} onChange={this.handleChange.bind(this)} />
-            <input type="text" style={{display: this.state.display1}} placeholder="Gender" name="gender" value={this.state.estilo} onChange={this.handleChange.bind(this)} />
+            <input type="text" style={{display: this.state.display}} placeholder="Estilo" name="style" value={this.state.gender} onChange={this.handleChange.bind(this)} />
+            <input type="text" style={{display: this.state.display1}} placeholder="gender" name="gender" value={this.state.style} onChange={this.handleChange.bind(this)} />
             */}
           </label>
           </div>
@@ -103,6 +99,8 @@ export default class Basic extends Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+        )}
+        </BooksContext.Consumer>
         </div>
       );
     }

@@ -23,8 +23,8 @@ class Header extends Component {
               </Navbar.Text>
               </Navbar.Collapse>
       </Navbar>
-      <div class="menu">
-      <ul class="palcentro">
+      <div className="menu">
+      <ul className="palcentro">
 
         <li>
           <Link to="/body">Home</Link>
