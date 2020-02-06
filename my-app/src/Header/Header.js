@@ -6,8 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import "./Header.css"
-import Listado from "../Listado/Listado.js"
-import Body from "../Body/Body.js"
+
 
 
 class Header extends Component {
@@ -33,7 +32,9 @@ class Header extends Component {
         <li>
           <Link to="/listado">Listado</Link>
         </li>
-        <li>Formulario</li>
+        <li>
+          <Link to="/basic">Formulario</Link>
+      </li>
 
       </ul>
     </div>

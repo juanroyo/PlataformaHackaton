@@ -11,24 +11,27 @@ import {
 import Header from "./Header/Header.js"
 import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
-import Footer from "./Footer/Footer.js"
-import Basic from "./Footer/basic.js";
+import Footer from "./Footer/footer.js"
+import Basic from "./Form/basic.js";
+import MyProvider from "./provider.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render() {
   return (
+    <MyProvider>
     <Router>
     <div>
       <Header />
       <Switch>
         <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
+        <Route path="/basic" component={Basic} />
       </Switch>
-      <Basic />
       <Footer />
     </div>
     </Router>
+    </MyProvider>
   );
 
 }
