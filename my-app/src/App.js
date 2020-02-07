@@ -14,6 +14,7 @@ import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
+import Page from "./Page/page.js";
 //import MyProvider from "./provider.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,6 +39,7 @@ class App extends Component {
         <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
         <Route path="/basic" component={Basic} />
+        <Route path="/page" component={Page} />
       </Switch>
       <Footer />
       </BooksContext.Provider>
