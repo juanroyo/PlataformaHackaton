@@ -15,7 +15,7 @@ class Listado extends Component {
    }
 
  render() {
-   const { filter, data } = this.state;
+   const { filter, data } = this.BooksContext;
    const lowercasedFilter = filter.toLowerCase();
    const filteredData = data.filter(item => {
      return Object.keys(item).some(key =>

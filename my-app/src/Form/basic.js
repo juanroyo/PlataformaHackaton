@@ -23,7 +23,7 @@ export default class Basic extends Component {
       let change = {}
     change[title.target.name] = title.target.value
     this.setState(change)
-    console.log(BooksUser.title)
+    console.log(BooksContext.title)
     }
     /*handleChange(event) {
       this.setState({value: event.target.value});
