@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+  "id": "1",
+  "itle": "100 Años de soledad",
+  "ender": "realismo fantastico",
+  "tyle": "colombiano"
+},
+    {
+  "id": "2",
+  "title": "no",
+  "gender": "si",
+  "style": "colombiano"
+}
+]
+}
