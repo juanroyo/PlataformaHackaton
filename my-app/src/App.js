@@ -8,7 +8,7 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import BooksContext from "./provider.js"
+//import BooksContext from "./provider.js"
 import Header from "./Header/Header.js"
 import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
@@ -34,7 +34,7 @@ class App extends Component {
         <Route path="/body" component={Body} />
         <Route path="/basic" component={Basic} />
       </Switch>
-      <Cosa />
+      
       <Footer />
 
     </div>
