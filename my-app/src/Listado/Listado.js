@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import {Redirect, Link} from "react-router-dom";
+import {Redirect,
+  Link,
+  Route,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
+import Page from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/Page/page.js";
 import "./listado.css"
 import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 
 class Listado extends Component {
-    state = {
+constructor(props) {
+  super(props)
+    this.state = {
       filter: "",
       data: [
         {
@@ -13,8 +21,15 @@ class Listado extends Component {
       gender: 'realismo fantastico',
       style: 'colombiano'
     },
+        {
+      id: '2',
+      title: 'no',
+      gender: 'si',
+      style: 'colombiano'
+    },
     ],
     }
+}
 
   handleChange = event => {
    this.setState({ filter: event.target.value });
@@ -32,6 +47,7 @@ class Listado extends Component {
        item[key].toLowerCase().includes(lowercasedFilter)
      );
    });
+   var match = useRouteMatch();
    return (
     <div className="palsentro">
         <div className="palsentro">
@@ -43,7 +59,7 @@ class Listado extends Component {
             <div className="container">
               <br />
               <img src={item.image} width="100" height="150" />
-              <Link to="/page"><h3>{item.title}</h3></Link>
+              <Link to={`${match.url}/${item.id}`}><h3>{item.title}</h3></Link>
               <p className="classp">{item.gender}</p>
               <p className="classp">{item.style}</p>
               <p className="classp">{item.genero}</p>
@@ -51,6 +67,7 @@ class Listado extends Component {
             </div>
           </div>
         ))}
+        <Route path={`${match.path}/:pageId`} component={Page} />
       </div>
    );
  }
