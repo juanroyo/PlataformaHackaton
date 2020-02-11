@@ -14,29 +14,35 @@ import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
-import Fire from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/fire.js";
-import Cosa from "./prueba.js";
 
 //import MyProvider from "./provider.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+const BooksUser = {
+    id: '1',
+    title: '100 Años de soledad',
+    gender: 'realismo fantastico',
+    style: 'colombiano'
+};
 
 class App extends Component {
-
   render() {
   return (
+
     <Router>
     <div>
+      <BooksContext.Provider value={BooksUser}>
+
+
       <Header />
       <Switch>
         <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
         <Route path="/basic" component={Basic} />
-      </Switch>
-      <Cosa />
-      <Footer />
 
+      </Switch>
+      <Footer />
+      </BooksContext.Provider>
     </div>
     </Router>
 

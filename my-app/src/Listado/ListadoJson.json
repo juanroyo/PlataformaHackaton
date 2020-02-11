@@ -2,9 +2,9 @@
   "data": [
     {
   "id": "1",
-  "itle": "100 Años de soledad",
-  "ender": "realismo fantastico",
-  "tyle": "colombiano"
+  "title": "100 Años de soledad",
+  "gender": "realismo fantastico",
+  "style": "colombiano"
 },
     {
   "id": "2",
