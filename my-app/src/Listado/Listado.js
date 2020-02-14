@@ -9,6 +9,7 @@ import Page from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-a
 import "./listado.css"
 import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 
+
 class Listado extends Component {
 constructor(props) {
   super(props)
@@ -37,8 +38,20 @@ constructor(props) {
 
  /*onSubmit = (e) => {
           return  <Redirect  to="/posts/" />
-   }*/
-
+   }
+   const data = ({ match, data }) => {
+  var product = data.find(p => d.id === Number(match.params.dataId));
+  var productData;}
+   var linkList = data.map(item => {
+       return (
+         <li key={item.id}>
+           <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
+         </li>
+       );
+     });*/
+  Topic ({ match }) {
+  const topic = topics.find(({ id }) => id === match.params.topicId)
+}
  render() {
    const { filter, data } = this.state;
    const lowercasedFilter = filter.toLowerCase();
@@ -47,7 +60,7 @@ constructor(props) {
        item[key].toLowerCase().includes(lowercasedFilter)
      );
    });
-   var match = useRouteMatch();
+   //var match = useRouteMatch();
    return (
     <div className="palsentro">
         <div className="palsentro">
@@ -67,7 +80,8 @@ constructor(props) {
             </div>
           </div>
         ))}
-        <Route path={`${match.path}/:pageId`} component={Page} />
+        <Route path={`${match.url}/:pageId`} component={Page} />
+         <Route exact path={match.url} />
       </div>
    );
  }

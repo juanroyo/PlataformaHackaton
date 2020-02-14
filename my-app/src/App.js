@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 //import BooksContext from "./provider.js"
 import Header from "./Header/Header.js"
-import Listado from "./Listado/Listado.js"
+//import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
@@ -30,11 +30,11 @@ class App extends Component {
     <div>
       <Header />
       <Switch>
-        <Route path="/listado" component={Listado} />
+      {/*  <Route path="/listado" component={Listado} /> */}
         <Route path="/body" component={Body} />
         <Route path="/basic" component={Basic} />
       </Switch>
-      
+
       <Footer />
 
     </div>

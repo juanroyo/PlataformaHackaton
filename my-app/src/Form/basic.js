@@ -1,27 +1,27 @@
 import React, { Component } from "react";
-import "./basic.css"
+import "./basic.css";
+import firebase from 'firebase';
 import Fire from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/fire.js";
+
 //import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 //import MyProvider from "/Users/juanroyo/Documents/projects/PlataformaHackaton/my-app/src/provider.js"
 
 export default class Basic extends Component {
-  componentDidMount(){
-    /* Create reference to messages in Firebase Database */
+    componentDidMount(){
+  //  Create reference to messages in Firebase Database
     let messagesRef = Fire.database().ref('data').orderByKey().limitToLast(100);
     messagesRef.on('child_added', snapshot => {
-      /* Update React state when message is added at Firebase Database */
+      // Update React state when message is added at Firebase Database
       let message = { text: snapshot.val(), id: snapshot.key };
       this.setState({ data: [message].concat(this.state.data) });
     })
   }
-  addMessage(e){
-    e.preventDefault(); // <- prevent form submit from reloading the page
-    /* Send the message to Firebase */
-    Fire.database().ref('data').push( this.inputEl.title );
-    Fire.database().ref('data').push( this.inputEl.gender );
-    Fire.database().ref('data').push( this.inputEl.style );
-    this.inputEl.value = ''; // <- clear the input
-  }
+  /*firebase.database().ref('/').set({
+    console.log(dataList.val());
+    title: title,
+    gender:  gender,
+    style: style
+  });*/
 
   constructor(props) {
       super(props);
@@ -43,8 +43,33 @@ export default class Basic extends Component {
         ]
       }
       this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+      this.addBook = this.addBook.bind(this);
       this.handleAppear = this.handleAppear.bind(this);
+    }
+
+    componentDidMount() {
+      return firebase
+        .database()
+        .ref("/")
+        .once("value")
+        .then(dataList => {
+          this.setState({ data: dataList.val() });
+          console.log(dataList.val());
+        });
+
+    }
+
+    addMessage(e){
+
+      e.preventDefault(); // <- prevent form submit from reloading the page
+      // Send the message to Firebase
+      const params = {
+          title: this.inputName.value,
+          gender:  this.inputGender.value,
+          style: this.inputStyle.value
+        };
+        firebase.database().ref('/').push(params)
+
     }
 
     handleChange(title, gender, style) {
@@ -58,26 +83,29 @@ export default class Basic extends Component {
 
     }*/
 
-    handleSubmit(event) {
-      alert('A name was submitted: ' + event.target.value);
+    addBook(event) {
       event.preventDefault();
+
+      // 1) Montar los datos a enviar
+      let paquete = {};
+
+      console.log(event.target.elements.seleccionar.value);
+
+      // Dependiendo de si es novela o comic...
+      /*if( event.target.elements.seleccionar.value == "comic") {
+        paquete = {
+          title : event.target.elements.title.value,
+
+        };
+      }*/
+
+      // 2) Tener la dirección de envío
+
+
+      // 3) Enviar los datos
     }
 
     handleAppear(event) {
-      /*if (event.target.value == "comic") {
-        this.setState({display: "block"})
-      } else {
-        this.setState({display: "none"})
-      }
-      if (event.target.value == "novel") {
-        this.setState({display1: "block"})
-      } else {
-        this.setState({display1: "none"})
-      }
-      if (event.target.value == "seleccionar") {
-        this.setState({display: "none"})
-        this.setState({display1: "none"})
-      }*/
       this.setState({selected: event.target.value})
     }
 
@@ -89,14 +117,16 @@ export default class Basic extends Component {
           var ph = "Style";
           var n = "style";
           var v = this.state.style;
+          var f = Style => this.inputStyle = Style;
         } else if (this.state.selected == "novel") {
           var ph = "gender";
           var n = "gender";
           var v = this.state.gender;
+          var f = Gender => this.inputGender = Gender;
         }
         // Si es lo otro
         // ...
-        return (<input type="text" placeholder={ph} name={n} value={v} ref={ el => this.inputEl = el } />);
+        return (<input type="text" placeholder={ph} name={n} value={v} ref={f} id="username" />);
       }
     }
 
@@ -107,31 +137,21 @@ export default class Basic extends Component {
           <div className="wrap">
           <label>
             Name:
-            <input type="text" name="title" placeholder="Title" ref={ el => this.inputEl = el } />
+            <input type="text" name="title" id="username" placeholder="Title" ref={title => this.inputName = title}  />
             {this.drawInputs()}
-            {/*
-            <input type="text" style={{display: this.state.display}} placeholder="Estilo" name="style" value={this.state.gender} onChange={this.handleChange.bind(this)} />
-            <input type="text" style={{display: this.state.display1}} placeholder="gender" name="gender" value={this.state.style} onChange={this.handleChange.bind(this)} />
-            */}
           </label>
           </div>
           <label>
           Selecciona tu tipo:
           <select value={this.state.selected} name="seleccionar" onChange={this.handleAppear}>
             <option value="seleccionar" >seleccionar</option>
-            <option value="novel">Novel</option>
-            <option value="comic">Comic</option>
+            <option value="novel" >Novel</option>
+            <option value="comic" ref={Style => this.inputStyle = Style}>Comic</option>
           </select>
           </label>
           <input type="submit" value="Submit" />
         </form>
-        )}
         </div>
       );
     }
 }
-/*<select value={this.state.selection} onChange={this.handleAppear}>
-  <option value={this.state.selection[0]} name="seleccionar">seleccionar</option>
-  <option value={this.state.selection[1]} name="novel">Novel</option>
-  <option value={this.state.selection[2]} name="comic">Comic</option>
-</select>*/
