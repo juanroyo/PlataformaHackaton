@@ -7,7 +7,7 @@ import {Redirect,
 } from "react-router-dom";
 //import Page from "./Page/page.js";
 import "./listado.css";
-import BooksContext from "./src/Context.js";
+import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/Context.js";
 
 
 
@@ -42,7 +42,7 @@ constructor(props) {
  render() {
    const { filter, data } = this.state;
    const lowercasedFilter = filter.toLowerCase();
-   let filterData = context.data;
+
    const filteredData = data.filter(item => {
      return Object.keys(item).some(key =>
        item[key].toLowerCase().includes(lowercasedFilter)

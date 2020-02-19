@@ -16,7 +16,7 @@ import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
-import Fire from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/fire.js";
+import Fire from "./fire.js";
 import Cosa from "./prueba.js";
 
 //import MyProvider from "./provider.js"

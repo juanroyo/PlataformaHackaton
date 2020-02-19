@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./basic.css";
 import firebase from 'firebase';
-import Fire from "./src/fire.js";
+import Fire from "../fire.js";
 
 //import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 //import MyProvider from "/Users/juanroyo/Documents/projects/PlataformaHackaton/my-app/src/provider.js"
