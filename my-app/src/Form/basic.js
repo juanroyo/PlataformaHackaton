@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./basic.css";
 import firebase from 'firebase';
-import Fire from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/fire.js";
+import Fire from "./src/fire.js";
 
 //import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
 //import MyProvider from "/Users/juanroyo/Documents/projects/PlataformaHackaton/my-app/src/provider.js"
@@ -16,12 +16,7 @@ export default class Basic extends Component {
       this.setState({ data: [message].concat(this.state.data) });
     })
   }
-  /*firebase.database().ref('/').set({
-    console.log(dataList.val());
-    title: title,
-    gender:  gender,
-    style: style
-  });*/
+
 
   constructor(props) {
       super(props);
@@ -46,6 +41,20 @@ export default class Basic extends Component {
       this.addBook = this.addBook.bind(this);
       this.handleAppear = this.handleAppear.bind(this);
     }
+      retrieveUser() {
+      let userId = this.event.target.elements.title.value;
+
+      return firebase.database()
+          .ref('/')
+          .once('value')
+          .then(function(myData) {
+            let myUser = myData.val()[userId];
+            console.log(myData.val()[userId])
+            // Draw data in view
+            document.getElementById("userinfo").innerHTML = "Hi, " + myUser.username + " (" + myUser.email + ")";
+          }
+        );
+    }
 
     componentDidMount() {
       return firebase
@@ -61,14 +70,20 @@ export default class Basic extends Component {
 
     addMessage(e){
 
-      e.preventDefault(); // <- prevent form submit from reloading the page
-      // Send the message to Firebase
       const params = {
           title: this.inputName.value,
           gender:  this.inputGender.value,
           style: this.inputStyle.value
         };
-        firebase.database().ref('/').push(params)
+      e.preventDefault(); // <- prevent form submit from reloading the page
+      // Send the message to Firebase
+      firebase.database()
+        .ref('/')
+        .once('value')
+        .then(function(add) {
+          firebase.database().ref('/').set(params)
+        })
+
 
     }
 
@@ -78,10 +93,7 @@ export default class Basic extends Component {
     this.setState(change)
 
     }
-    /*handleChange(event) {
-      this.setState({value: event.target.value});
 
-    }*/
 
     addBook(event) {
       event.preventDefault();

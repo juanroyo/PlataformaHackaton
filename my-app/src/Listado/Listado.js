@@ -5,9 +5,10 @@ import {Redirect,
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import Page from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/Page/page.js";
-import "./listado.css"
-import BooksContext from "/Users/juanroyo/Documents/projects/PlataformaHackatoncopy/my-app/src/provider.js"
+//import Page from "./Page/page.js";
+import "./listado.css";
+import BooksContext from "./src/Context.js";
+
 
 
 class Listado extends Component {
@@ -36,25 +37,12 @@ constructor(props) {
    this.setState({ filter: event.target.value });
  };
 
- /*onSubmit = (e) => {
-          return  <Redirect  to="/posts/" />
-   }
-   const data = ({ match, data }) => {
-  var product = data.find(p => d.id === Number(match.params.dataId));
-  var productData;}
-   var linkList = data.map(item => {
-       return (
-         <li key={item.id}>
-           <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
-         </li>
-       );
-     });*/
-  Topic ({ match }) {
-  const topic = topics.find(({ id }) => id === match.params.topicId)
-}
+
+
  render() {
    const { filter, data } = this.state;
    const lowercasedFilter = filter.toLowerCase();
+   let filterData = context.data;
    const filteredData = data.filter(item => {
      return Object.keys(item).some(key =>
        item[key].toLowerCase().includes(lowercasedFilter)
@@ -62,27 +50,29 @@ constructor(props) {
    });
    //var match = useRouteMatch();
    return (
+     <BooksContext.Consumer>
+       {context => (
     <div className="palsentro">
         <div className="palsentro">
         <input value={filter} onChange={this.handleChange} />
         <button type="button" onClick={this.onSubmit}> <Link to='/body'>Back</Link> </button>
         </div>
-        {filteredData.map(item => (
-          <div key={item.id}>
+        {Object.keys(context.data).map(item =>
+          <div key={item}>
             <div className="container">
               <br />
-              <img src={item.image} width="100" height="150" />
-              <Link to={`${match.url}/${item.id}`}><h3>{item.title}</h3></Link>
-              <p className="classp">{item.gender}</p>
-              <p className="classp">{item.style}</p>
-              <p className="classp">{item.genero}</p>
+              <img src={context.data[item].image} width="100" height="150" />
+              <h3>{context.data[item].title}</h3>
+              <p className="classp">{context.data[item].gender}</p>
+              <p className="classp">{context.data[item].style}</p>
+              <p className="classp">{context.data[item].genero}</p>
               <hr />
             </div>
           </div>
-        ))}
-        <Route path={`${match.url}/:pageId`} component={Page} />
-         <Route exact path={match.url} />
+        )}
       </div>
+      )}
+      </BooksContext.Consumer>
    );
  }
 }

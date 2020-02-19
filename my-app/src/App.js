@@ -8,9 +8,11 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-//import BooksContext from "./provider.js"
+import MyProvider from "./Provider.js"
 import Header from "./Header/Header.js"
-//import Listado from "./Listado/Listado.js"
+import BooksContext from "./Context.js"
+import PruebaContext from "./PruebaContext.js"
+import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
@@ -26,11 +28,12 @@ class App extends Component {
 
   render() {
   return (
+    <MyProvider>
     <Router>
     <div>
       <Header />
       <Switch>
-      {/*  <Route path="/listado" component={Listado} /> */}
+      <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
         <Route path="/basic" component={Basic} />
       </Switch>
@@ -39,7 +42,7 @@ class App extends Component {
 
     </div>
     </Router>
-
+    </MyProvider>
   );
 
 }
