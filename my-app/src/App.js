@@ -44,7 +44,7 @@ class App extends Component {
     <Router>
     <div>
       <Header />
-      
+
       <Switch>
       <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
@@ -57,7 +57,6 @@ class App extends Component {
     </Router>
   </MyProvider>
   );
-
 }
 }
 export default App;

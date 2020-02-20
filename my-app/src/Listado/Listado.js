@@ -19,26 +19,29 @@ constructor(props) {
       filter: "",
       books: [],
     }
-    this.Getbooks = this.GetBooks.bind(this);
+    this.GetBooks = this.GetBooks.bind(this);
 }
 /*handleChange = event => {
   this.setState({ filter: event.target.value });
 }*/
 
   handleChange = event => {
-   this.setState({ filter: event.target.value }, () => {
-       this.GetBooks();
-   });
- };
+    var array = this.state.books;
+   this.setState({ filter: event.target.value});
+   this.GetBooks();
+   };
 
 GetBooks() {
    return firebase
      .database()
-     .ref("/")
+     .ref("/films/")
      .once("value")
      .then(booksList => {
-       this.setState({ books: booksList.val() });
-       console.log("hola" + booksList.val());
+       let test = this.state.books;
+       booksList.val().map((item) => {
+         test.push(item);
+       })
+       return this.setState({ books: test});
      });
  }
  componentDidMount() {
@@ -47,22 +50,23 @@ GetBooks() {
    // make the API call
    fetch(url)
        .then(res => res.json())
-       .then(data => this.setState({ books: data.subjects }))
+       .then(data => {
+         this.setState({ books: data.subjects })
+       })
 
         .catch(err => {
            console.error('Error: ', err);
        });
-
 }
 
  render() {
    const { filter, books } = this.state;
-   const lowercasedFilter = filter.toLowerCase();
+  /* const lowercasedFilter = filter.toLowerCase();
    const filteredData = books.filter(item => {
      return Object.keys(item).some(key =>
        typeof item[key] === "string" && item[key].toLowerCase().includes(lowercasedFilter)
      );
-   });
+   });*/
    //var match = useRouteMatch();
    return (
      <BooksContext.Consumer>
@@ -85,9 +89,18 @@ GetBooks() {
             </div>
           </div>
         )}*/}
-        {filteredData.map(book => (
+        {  this.state.books
+          .filter(item => {
+            if (this.state.filter.length > 0)
+              return Object.keys(item).some(key =>
+                typeof item[key] === "string" && item[key]
+                  .toLowerCase()
+                  .includes(this.state.filter.toLowerCase())
+              );
+          })
+          .map(item => (
           <li>
-            <p>{book.name}</p>
+            <p>{(item.name ? item.name : item.title)}</p>
           </li>
         ))}
       </div>
