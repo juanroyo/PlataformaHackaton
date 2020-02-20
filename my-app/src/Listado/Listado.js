@@ -7,6 +7,7 @@ import {Redirect,
 } from "react-router-dom";
 //import Page from "./Page/page.js";
 import "./listado.css";
+import firebase from 'firebase';
 import BooksContext from "../Context.js";
 
 
@@ -16,29 +17,30 @@ constructor(props) {
   super(props)
     this.state = {
       filter: "",
-      data: [
-        {
-      id: '1',
-      title: '100 Años de soledad',
-      gender: 'realismo fantastico',
-      style: 'colombiano'
-    },
-        {
-      id: '2',
-      title: 'no',
-      gender: 'si',
-      style: 'colombiano'
-    },
-    ],
-    books: [],
+      books: [],
     }
-
+    this.Getbooks = this.GetBooks.bind(this);
 }
+/*handleChange = event => {
+  this.setState({ filter: event.target.value });
+}*/
 
   handleChange = event => {
-   this.setState({ filter: event.target.value });
+   this.setState({ filter: event.target.value }, () => {
+       this.GetBooks();
+   });
  };
 
+GetBooks() {
+   return firebase
+     .database()
+     .ref("/")
+     .once("value")
+     .then(booksList => {
+       this.setState({ books: booksList.val() });
+       console.log("hola" + booksList.val());
+     });
+ }
  componentDidMount() {
    // GitHub API URL
    const url = 'http://openlibrary.org/people/george08/lists/OL97L/subjects.json?limit=';
@@ -50,15 +52,15 @@ constructor(props) {
         .catch(err => {
            console.error('Error: ', err);
        });
-       console.log(this.state.books)
+
 }
 
  render() {
-   const { filter, data, books } = this.state;
+   const { filter, books } = this.state;
    const lowercasedFilter = filter.toLowerCase();
-   const filteredData = data.filter(item => {
+   const filteredData = books.filter(item => {
      return Object.keys(item).some(key =>
-       item[key].toLowerCase().includes(lowercasedFilter)
+       typeof item[key] === "string" && item[key].toLowerCase().includes(lowercasedFilter)
      );
    });
    //var match = useRouteMatch();
@@ -70,7 +72,7 @@ constructor(props) {
         <input value={filter} onChange={this.handleChange} />
         <button type="button" onClick={this.onSubmit}> <Link to='/body'>Back</Link> </button>
         </div>
-        {Object.keys(context.data).map(item =>
+        {/*{Object.keys(context.data).map(item =>
           <div key={item}>
             <div className="container">
               <br />
@@ -82,12 +84,12 @@ constructor(props) {
               <hr />
             </div>
           </div>
-        )}
-        {books.map(book =>
-          <li key={book.count}>
-            <p>{book.name} hey </p>
+        )}*/}
+        {filteredData.map(book => (
+          <li>
+            <p>{book.name}</p>
           </li>
-        )}
+        ))}
       </div>
       )}
       </BooksContext.Consumer>
