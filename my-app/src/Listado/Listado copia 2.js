@@ -39,18 +39,17 @@ constructor(props) {
    this.setState({ filter: event.target.value });
  };
 
- componentDidMount() {
+ getBook() {
    // GitHub API URL
    const url = 'http://openlibrary.org/people/george08/lists/OL97L/subjects.json?limit=';
    // make the API call
    fetch(url)
        .then(res => res.json())
-       .then(data => this.setState({ books: data.subjects }))
+       .then(data => console.log( "hola" + this.setState({ books: data.subjects })))
 
         .catch(err => {
            console.error('Error: ', err);
        });
-       console.log(this.state.books)
 }
 
  render() {
@@ -85,7 +84,7 @@ constructor(props) {
         )}
         {books.map(book =>
           <li key={book.count}>
-            <p>{book.name} hey </p>
+            <a href={book.url}>{books.name} hey </a>
           </li>
         )}
       </div>

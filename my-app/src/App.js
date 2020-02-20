@@ -16,6 +16,7 @@ import Listado from "./Listado/Listado.js"
 import Body from "./Body/Body.js"
 import Footer from "./Footer/footer.js"
 import Basic from "./Form/basic.js";
+import firebase from 'firebase';
 import Fire from "./fire.js";
 import Cosa from "./prueba.js";
 
@@ -26,12 +27,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
 
+
+ /*GetBooks() {
+     return firebase
+       .database()
+       .ref("/")
+       .once("value")
+       .then(bookList => {
+         this.setState({ Book: bookList.val() });
+       });
+   }*/
+
   render() {
   return (
     <MyProvider>
     <Router>
     <div>
       <Header />
+      
       <Switch>
       <Route path="/listado" component={Listado} />
         <Route path="/body" component={Body} />
@@ -42,7 +55,7 @@ class App extends Component {
 
     </div>
     </Router>
-    </MyProvider>
+  </MyProvider>
   );
 
 }

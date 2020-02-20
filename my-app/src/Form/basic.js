@@ -81,7 +81,7 @@ export default class Basic extends Component {
         .ref('/')
         .once('value')
         .then(function(add) {
-          firebase.database().ref('/').set(params)
+          firebase.database().ref('/').push(params)
         })
 
 

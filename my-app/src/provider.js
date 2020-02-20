@@ -26,8 +26,9 @@ class MyProvider extends Component {
     },
     ],
   }
+}
 
-        }
+
 
 
     render() {
