@@ -7,15 +7,7 @@ import Fire from "../fire.js";
 //import MyProvider from "/Users/juanroyo/Documents/projects/PlataformaHackaton/my-app/src/provider.js"
 
 export default class Basic extends Component {
-    componentDidMount(){
-  //  Create reference to messages in Firebase Database
-    let messagesRef = Fire.database().ref('data').orderByKey().limitToLast(100);
-    messagesRef.on('child_added', snapshot => {
-      // Update React state when message is added at Firebase Database
-      let message = { text: snapshot.val(), id: snapshot.key };
-      this.setState({ data: [message].concat(this.state.data) });
-    })
-  }
+
 
 
   constructor(props) {
@@ -37,23 +29,9 @@ export default class Basic extends Component {
           }
         ]
       }
-      this.handleChange = this.handleChange.bind(this);
+    //  this.handleChange = this.handleChange.bind(this);
       this.addBook = this.addBook.bind(this);
       this.handleAppear = this.handleAppear.bind(this);
-    }
-      retrieveUser() {
-      let userId = this.event.target.elements.title.value;
-
-      return firebase.database()
-          .ref('/')
-          .once('value')
-          .then(function(myData) {
-            let myUser = myData.val()[userId];
-            console.log(myData.val()[userId])
-            // Draw data in view
-            document.getElementById("userinfo").innerHTML = "Hi, " + myUser.username + " (" + myUser.email + ")";
-          }
-        );
     }
 
     componentDidMount() {
@@ -65,36 +43,34 @@ export default class Basic extends Component {
           this.setState({ data: dataList.val() });
           console.log(dataList.val());
         });
-
     }
 
     addMessage(e){
 
       const params = {
-          title: this.inputName.value,
           gender:  this.inputGender.value,
+          title: this.inputName.value,
           style: this.inputStyle.value
         };
+        let totalUsers = 0;
+        let userExists = false;
       e.preventDefault(); // <- prevent form submit from reloading the page
       // Send the message to Firebase
+      var qty;
       firebase.database()
-        .ref('/')
+        .ref('/films')
         .once('value')
-        .then(function(add) {
-          firebase.database().ref('/').push(params)
-        })
-
-
-    }
-
-    handleChange(title, gender, style) {
+        .then(function(entries) {
+          firebase.database().ref("/films/" + (entries.val() ? entries.val().length : 0)).set(params);
+          //   qty = "/films/" + snapshot.numChildren()
+          return qty
+    })
+};
+    /*handleChange(title, gender, style) {
       let change = {}
     change[title.target.name] = title.target.value
     this.setState(change)
-
-    }
-
-
+    }*/
     addBook(event) {
       event.preventDefault();
 
@@ -157,8 +133,8 @@ export default class Basic extends Component {
           Selecciona tu tipo:
           <select value={this.state.selected} name="seleccionar" onChange={this.handleAppear}>
             <option value="seleccionar" >seleccionar</option>
-            <option value="novel" >Novel</option>
-            <option value="comic" ref={Style => this.inputStyle = Style}>Comic</option>
+          <option value="novel" ref={Gender => this.inputGender = Gender}>Novel</option>
+          <option value="comic" ref={Style => this.inputStyle = Style}>Comic</option>
           </select>
           </label>
           <input type="submit" value="Submit" />
